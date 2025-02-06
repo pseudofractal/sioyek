@@ -929,6 +929,7 @@ public:
     Q_INVOKABLE QString execute_macro_sync(QString macro);
     Q_INVOKABLE void set_variable(QString name, QVariant var);
     Q_INVOKABLE QVariant get_variable(QString name);
+    Q_INVOKABLE QString get_environment_variable(QString name);
     void run_javascript_command(std::wstring javascript_code, std::optional<std::wstring> entry_point, bool is_async);
     void set_text_prompt_text(QString text);
     AbsoluteDocumentPos get_window_abspos(WindowPos window_pos);
