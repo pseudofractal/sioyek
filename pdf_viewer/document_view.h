@@ -113,6 +113,7 @@ public:
     std::optional<PdfLink> get_link_in_pos(WindowPos pos);
     int get_highlight_index_in_pos(WindowPos pos);
     void get_text_selection(AbsoluteDocumentPos selection_begin, AbsoluteDocumentPos selection_end, bool is_word_selection, std::deque<AbsoluteRect>& selected_characters, std::wstring& text_selection);
+    void get_line_selection(AbsoluteDocumentPos selection_begin, AbsoluteDocumentPos selection_end, std::deque<AbsoluteRect>& selected_characters, std::wstring& text_selection);
     void add_mark(char symbol);
     std::string add_bookmark(std::wstring desc);
     std::string add_highlight(AbsoluteDocumentPos selection_begin, AbsoluteDocumentPos selection_end, char type);

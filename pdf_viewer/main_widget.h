@@ -61,6 +61,12 @@ enum class DrawingMode {
     None
 };
 
+enum class SelectionMode {
+    Character,
+    Word,
+    Line
+};
+
 struct MenuNode {
     QString name;
     QString doc;
@@ -235,7 +241,7 @@ public:
     // is the user currently selecing text? (happens when we left click and move the cursor)
     bool is_selecting = false;
     // is the user in word select mode? (happens when we double left click and move the cursor)
-    bool is_word_selecting = false;
+    SelectionMode selection_mode = SelectionMode::Character;
 
     // in select highlight mode, we immediately highlight the text when it is selected
     // with highlight type of `select_highlight_type` 
@@ -261,6 +267,8 @@ public:
     // lower value when in smooth scroll mode or when user flicks a document in touch mode
     QTimer* validation_interval_timer = nullptr;
     QDateTime last_persistance_datetime;
+
+    std::optional<QDateTime> last_double_click_datetime = {};
 
     // the portal to be edited. This is usually set by `edit_portal` command which jumps to the portal
     // when we go back to the original location by jumping back in history, the portal will be edited
@@ -989,6 +997,7 @@ public:
     void delete_menu_nodes(MenuNode* items);
     void set_pending_portal(std::optional<std::wstring> doc_path, Portal portal);
     void set_pending_portal(std::optional<std::pair<std::optional<std::wstring>, Portal>> pending_portal);
+    void update_text_selection(AbsoluteDocumentPos mouse_abspos);
 };
 
 MainWidget* get_window_with_window_id(int window_id);
