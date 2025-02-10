@@ -6105,6 +6105,14 @@ MainWidget* MainWidget::handle_new_window() {
     new_widget->apply_window_params_for_one_window_mode();
     new_widget->execute_macro_if_enabled(STARTUP_COMMANDS);
 
+    auto color_mode = opengl_widget->get_current_color_mode();
+    if (color_mode == PdfViewOpenGLWidget::ColorPalette::Dark) {
+        new_widget->opengl_widget->set_dark_mode(true);
+    }
+    else if (color_mode == PdfViewOpenGLWidget::ColorPalette::Custom) {
+        new_widget->opengl_widget->set_custom_color_mode(true);
+    }
+
     windows.push_back(new_widget);
     return new_widget;
 }
