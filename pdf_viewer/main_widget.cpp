@@ -207,6 +207,7 @@ extern bool DONT_FOCUS_IF_SYNCTEX_RECT_IS_VISIBLE;
 extern bool USE_SYSTEM_THEME;
 extern bool USE_CUSTOM_COLOR_FOR_DARK_SYSTEM_THEME;
 extern bool ALLOW_MAIN_VIEW_SCROLL_WHILE_IN_OVERVIEW;
+extern bool SAME_WIDTH;
 
 extern bool SHOW_RIGHT_CLICK_CONTEXT_MENU;
 extern std::wstring CONTEXT_MENU_ITEMS;
@@ -1157,6 +1158,9 @@ MainWidget::MainWidget(fz_context* mupdf_context,
             if (doc()->get_should_reload_annotations()) {
                 doc()->reload_annotations_on_new_checksum();
                 validate_render();
+            }
+            if (main_document_view->needs_refill && doc()->can_use_highlights()){
+                main_document_view->fill_cached_virtual_rects(true);
             }
         }
 
@@ -7159,7 +7163,6 @@ void MainWidget::show_recursive_context_menu(std::unique_ptr<MenuItems> items) {
 }
 
 void MainWidget::handle_debug_command() {
-
 }
 
 void MainWidget::export_command_names(std::wstring file_path){
