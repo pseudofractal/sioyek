@@ -426,7 +426,7 @@ WindowPos DocumentView::document_to_window_pos_in_pixels_uncentered(DocumentPos 
 }
 
 WindowPos DocumentView::document_to_window_pos_in_pixels_banded(DocumentPos doc_pos) {
-    if (is_two_page_mode() || (REAL_PAGE_SEPARATION)) {
+    if (!fast_coordinates()) {
         VirtualPos vpos = document_to_virtual_pos(doc_pos);
         WindowPos window_pos = virtual_to_window_pos(vpos);
         return window_pos;
@@ -2087,7 +2087,7 @@ void DocumentView::fill_cached_virtual_rects(bool force) {
             cached_virtual_rects.clear();
             if (REAL_PAGE_SEPARATION || SAME_WIDTH) {
 
-                int first_page_width = current_document->get_page_width(0);
+                int first_page_width = current_document->get_page_width_median();
                 if (SAME_WIDTH) {
                     same_width_mode_first_page_width = first_page_width;
                 }
