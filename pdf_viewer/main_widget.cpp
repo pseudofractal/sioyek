@@ -5590,22 +5590,15 @@ void MainWidget::portal_to_definition() {
 }
 
 void MainWidget::move_visual_mark_command(int amount) {
-    if (opengl_widget->get_overview_page()) {
-        if (amount > 0) {
-            scroll_overview(amount);
-        }
-        else {
-            scroll_overview(amount);
-        }
-    }
-    else if (is_visual_mark_mode()) {
+    if (is_visual_mark_mode() && !opengl_widget->get_overview_page().has_value()) {
+
         move_visual_mark(amount);
+        if (AUTOCENTER_VISUAL_SCROLL) {
+            return_to_last_visual_mark();
+        }
     }
     else {
-        move_document(0.0f, 72.0f * amount * VERTICAL_MOVE_AMOUNT);
-    }
-    if (AUTOCENTER_VISUAL_SCROLL) {
-        return_to_last_visual_mark();
+        handle_vertical_move(amount);
     }
     validate_render();
 }
