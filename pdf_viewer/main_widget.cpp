@@ -5437,6 +5437,10 @@ void MainWidget::advance_command(std::unique_ptr<Command> new_command, std::wstr
                 }
                 //*result = new_command->get_result()
             }
+            if (new_command->get_name() != "repeat_last_command") {
+                last_performed_command_name = new_command->get_name();
+                last_performed_command_num_repeats = new_command->get_num_repeats();
+            }
             set_last_performed_command(std::move(new_command));
         }
         else {
@@ -11550,4 +11554,9 @@ void MainWidget::copy_text_to_clipboard(QString str) {
 
 QString MainWidget::get_environment_variable(QString name) {
     return QString::fromStdString(std::getenv(name.toStdString().c_str()));
+}
+
+void MainWidget::repeat_last_command() {
+    std::unique_ptr<Command> last_cmd = command_manager->get_command_with_name(this, last_performed_command_name);
+    handle_command_types(std::move(last_cmd), last_performed_command_num_repeats);
 }
