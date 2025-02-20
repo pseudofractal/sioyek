@@ -3740,6 +3740,18 @@ public:
 
 };
 
+class CopyAllTextCommand : public Command {
+public:
+    static inline const std::string cname = "copy_all_text";
+    static inline const std::string hname = "Copy all of the file's text";
+    CopyAllTextCommand(MainWidget* w) : Command(cname, w) {};
+    void perform() {
+        std::wstring& doc_text = widget->doc()->get_super_fast_search_index();
+        copy_to_clipboard(doc_text);
+    }
+
+};
+
 class GotoBeginningCommand : public Command {
 public:
     static inline const std::string cname = "goto_beginning";
@@ -6709,6 +6721,7 @@ CommandManager::CommandManager(ConfigManager* config_manager) {
     register_command<OpenDocumentEmbeddedCommand>();
     register_command<OpenDocumentEmbeddedFromCurrentPathCommand>();
     register_command<CopyCommand>();
+    register_command<CopyAllTextCommand>();
     register_command<ToggleFullscreenCommand>();
     register_command<MaximizeCommand>();
     register_command<ToggleOneWindowCommand>();

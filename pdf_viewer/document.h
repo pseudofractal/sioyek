@@ -435,6 +435,7 @@ public:
     QJsonArray get_marks_json();
 
     std::wstring get_detected_paper_name_if_exists();
+    std::wstring& get_super_fast_search_index();
 
     friend class DocumentManager;
 };

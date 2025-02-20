@@ -4509,3 +4509,7 @@ std::wstring Document::get_detected_paper_name_if_exists() {
     return detected_paper_name;
 }
 
+
+std::wstring& Document::get_super_fast_search_index() {
+    return super_fast_search_index;
+}
