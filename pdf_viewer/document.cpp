@@ -4513,3 +4513,7 @@ std::wstring Document::get_detected_paper_name_if_exists() {
 std::wstring& Document::get_super_fast_search_index() {
     return super_fast_search_index;
 }
+
+std::vector<int>& Document::get_super_fast_search_page_indices() {
+    return super_fast_page_begin_indices;
+}

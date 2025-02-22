@@ -3752,6 +3752,31 @@ public:
 
 };
 
+class CopyCurrentChapterTextCommand : public Command {
+public:
+    static inline const std::string cname = "copy_current_chapter_text";
+    static inline const std::string hname = "Copy current chapter's text";
+    CopyCurrentChapterTextCommand(MainWidget* w) : Command(cname, w) {};
+    void perform() {
+        auto chapter_page_range = widget->main_document_view->get_current_page_range();
+        if (chapter_page_range) {
+            auto [begin_page, end_page] = chapter_page_range.value();
+            auto page_indices = widget->doc()->get_super_fast_search_page_indices();
+            std::wstring& doc_text = widget->doc()->get_super_fast_search_index();
+            if (begin_page >= 0 && begin_page < page_indices.size() && end_page >= 0 && end_page < page_indices.size()) {
+                int begin_index = page_indices[begin_page];
+                int end_index = end_page < page_indices.size() - 1 ? page_indices[end_page + 1] : doc_text.size();
+
+                copy_to_clipboard(doc_text.substr(begin_index, end_index - begin_index));
+
+            }
+
+        }
+
+    }
+
+};
+
 class GotoBeginningCommand : public Command {
 public:
     static inline const std::string cname = "goto_beginning";
@@ -6722,6 +6747,7 @@ CommandManager::CommandManager(ConfigManager* config_manager) {
     register_command<OpenDocumentEmbeddedFromCurrentPathCommand>();
     register_command<CopyCommand>();
     register_command<CopyAllTextCommand>();
+    register_command<CopyCurrentChapterTextCommand>();
     register_command<ToggleFullscreenCommand>();
     register_command<MaximizeCommand>();
     register_command<ToggleOneWindowCommand>();

@@ -436,6 +436,7 @@ public:
 
     std::wstring get_detected_paper_name_if_exists();
     std::wstring& get_super_fast_search_index();
+    std::vector<int>& get_super_fast_search_page_indices();
 
     friend class DocumentManager;
 };
