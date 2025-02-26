@@ -64,6 +64,10 @@ protected:
     float page_space_x = 0;
     float page_space_y = 0;
 
+    float max_virtual_y;
+    float min_virtual_x;
+    float max_virtual_x;
+
 public:
     // list of selected characters (e.g. using mouse select) to be highlighted
     std::deque<AbsoluteRect> selected_character_rects;
