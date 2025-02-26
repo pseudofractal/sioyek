@@ -28,6 +28,7 @@ bool ADD_NEWLINES_WHEN_COPYING_TEXT = false;
 bool ALWAYS_COPY_SELECTED_TEXT = false;
 bool SHOW_STATUSBAR_ONLY_WHEN_MOUSE_OVER = false;
 float PERSISTANCE_PERIOD = -1.0f;
+bool SCROLL_PAST_DOCUMENT_ENDS = true;
 
 #ifdef SIOYEK_MOBILE
 bool TOUCH_MODE = true;
@@ -1019,6 +1020,7 @@ ConfigManager::ConfigManager(const Path& default_path, const Path& auto_path, co
     add_bool(L"add_newlines_when_copying_text", &ADD_NEWLINES_WHEN_COPYING_TEXT);
     add_bool(L"always_copy_selected_text", &ALWAYS_COPY_SELECTED_TEXT);
     add_bool(L"show_statusbar_only_when_hovered", &SHOW_STATUSBAR_ONLY_WHEN_MOUSE_OVER);
+    add_bool(L"scroll_past_document_ends", &SCROLL_PAST_DOCUMENT_ENDS);
     add_bool(L"uniform_page_widths", &SAME_WIDTH);
 
     add_string(L"google_scholar_address", &GOOGLE_SCHOLAR_ADDRESS);
