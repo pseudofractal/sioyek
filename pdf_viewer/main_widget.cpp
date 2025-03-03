@@ -1199,6 +1199,7 @@ MainWidget::MainWidget(fz_context* mupdf_context,
                     if (is_doc_valid(this->mupdf_context, utf8_encode(doc->get_path()))) {
                         doc->reload();
                         pdf_renderer->clear_cache();
+                        main_document_view->fill_cached_virtual_rects(true);
                         invalidate_render();
                     }
                 }
