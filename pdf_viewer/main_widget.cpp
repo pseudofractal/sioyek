@@ -1530,6 +1530,8 @@ std::wstring MainWidget::get_status_string(bool is_right) {
     status_string.replace("%{custom_message}", "");
     status_string.replace("%{search_progress}", "");
     status_string.replace("%{download}", "");
+    status_string.replace("\n", " ");
+    status_string.replace("\r", "");
 
     //if (DEBUG) {
     //    status_string += " [DEBUG MODE] ";
