@@ -875,15 +875,35 @@ void Command::handle_generic_requirement() {
 
 }
 
-AbsoluteRect get_rect_from_string(std::wstring str) {
+AbsoluteRect get_rect_from_string(std::wstring str, DocumentView* dv) {
+    bool is_window = false;
+    if (str.size() > 0 && str[0] == 'W') {
+        is_window = true;
+        str = str.substr(2);
+    }
+
     QStringList parts = QString::fromStdWString(str).split(' ');
 
-    AbsoluteRect result;
-    result.x0 = parts[0].toFloat();
-    result.y0 = parts[1].toFloat();
-    result.x1 = parts[2].toFloat();
-    result.y1 = parts[3].toFloat();
-    return result;
+    if (!is_window) {
+        AbsoluteRect result;
+        result.x0 = parts[0].toFloat();
+        result.y0 = parts[1].toFloat();
+        result.x1 = parts[2].toFloat();
+        result.y1 = parts[3].toFloat();
+        return result;
+    }
+    else {
+        NormalizedWindowRect nwr;
+        nwr.x0 = parts[0].toFloat();
+        nwr.y1 = parts[1].toFloat();
+        nwr.x1 = parts[2].toFloat();
+        nwr.y0 = parts[3].toFloat();
+        WindowRect wr = dv->normalized_to_window_rect(nwr);
+        auto top_left = dv->window_to_absolute_document_pos(wr.top_left());
+        auto bottom_right = dv->window_to_absolute_document_pos(wr.bottom_right());
+        return AbsoluteRect(top_left, bottom_right);
+    }
+
 }
 
 AbsoluteDocumentPos get_point_from_string(std::wstring str) {
@@ -909,7 +929,7 @@ void Command::set_next_requirement_with_string(std::wstring str) {
             set_file_requirement(str);
         }
         else if (req.type == RequirementType::Rect) {
-            set_rect_requirement(get_rect_from_string(str));
+            set_rect_requirement(get_rect_from_string(str, widget->main_document_view));
         }
         else if (req.type == RequirementType::Point) {
             set_point_requirement(get_point_from_string(str));
