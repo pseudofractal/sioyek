@@ -606,7 +606,11 @@ MainWidget* handle_args(const QStringList& arguments, QLocalSocket* origin=nullp
 }
 
 void focus_on_widget(QWidget* widget) {
+#ifdef Q_OS_WIN
     widget->activateWindow();
+#else
+    widget->raise();
+#endif
     widget->setWindowState(widget->windowState() & ~Qt::WindowMinimized | Qt::WindowActive);
 }
 
