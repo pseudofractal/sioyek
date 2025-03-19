@@ -9749,13 +9749,16 @@ QString MainWidget::handle_action_in_menu(std::wstring action) {
 
 std::wstring MainWidget::handle_synctex_to_ruler() {
     std::optional<NormalizedWindowRect> ruler_rect = main_document_view->get_ruler_window_rect();
-    fz_irect ruler_irect = main_document_view->normalized_to_window_rect(ruler_rect.value());
+    if (ruler_rect.has_value()){
+        fz_irect ruler_irect = main_document_view->normalized_to_window_rect(ruler_rect.value());
 
-    WindowPos mid_window_pos;
-    mid_window_pos.x = (ruler_irect.x0 + ruler_irect.x1) / 2;
-    mid_window_pos.y = (ruler_irect.y0 + ruler_irect.y1) / 2;
+        WindowPos mid_window_pos;
+        mid_window_pos.x = (ruler_irect.x0 + ruler_irect.x1) / 2;
+        mid_window_pos.y = (ruler_irect.y0 + ruler_irect.y1) / 2;
 
-    return synctex_under_pos(mid_window_pos);
+        return synctex_under_pos(mid_window_pos);
+    }
+    return L"";
 }
 
 void MainWidget::focus_on_line_with_index(int page, int index) {
