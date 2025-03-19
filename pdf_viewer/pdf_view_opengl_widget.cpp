@@ -1074,6 +1074,10 @@ void PdfViewOpenGLWidget::render_page(int page_number, bool in_overview, ColorPa
             &rendered_width,
             &rendered_height);
 
+        if (is_helper && !texture){
+            is_helper_waiting_for_render = true;
+        }
+
 
         // when rotating, we swap nv and nh 
         int nh_ = nh;
@@ -1404,6 +1408,7 @@ void PdfViewOpenGLWidget::my_render(QPainter* painter) {
         render_page(presentation_page_number);
     }
     else {
+        is_helper_waiting_for_render = false;
         std::array<float, 3> link_highlight_color = cc3(DEFAULT_LINK_HIGHLIGHT_COLOR);
 
         for (int page : visible_pages) {

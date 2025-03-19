@@ -200,6 +200,7 @@ protected:
     void render_transparent_background();
 
 public:
+    bool is_helper_waiting_for_render = false;
     std::optional<QImage> cached_framebuffer;
     int last_cache_num_drawings = -1;
     float last_cache_offset_x = -1;
