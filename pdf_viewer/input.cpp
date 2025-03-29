@@ -29,6 +29,7 @@ extern std::wstring SEARCH_URLS[26];
 extern bool ALPHABETIC_LINK_TAGS;
 extern std::vector<AdditionalKeymapData> ADDITIONAL_KEYMAPS;
 
+extern std::wstring DEFAULT_OPEN_FILE_PATH;
 extern bool ADD_NEWLINES_WHEN_COPYING_TEXT;
 extern float EPUB_WIDTH;
 extern float EPUB_HEIGHT;
@@ -3696,12 +3697,13 @@ public:
 
     void handle_generic_requirement() {
 
+        QString root_path = QString::fromStdWString(DEFAULT_OPEN_FILE_PATH);
         widget->set_current_widget(new FileSelector(
             FUZZY_SEARCHING,
             [widget = widget, this](std::wstring doc_path) {
                 set_generic_requirement(QString::fromStdWString(doc_path));
                 widget->advance_command(std::move(widget->pending_command_instance));
-            }, widget, ""));
+            }, widget, root_path));
         widget->show_current_widget();
     }
 
