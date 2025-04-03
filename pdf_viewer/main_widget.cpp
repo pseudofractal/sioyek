@@ -2974,7 +2974,12 @@ void MainWidget::mouseReleaseEvent(QMouseEvent* mevent) {
                 if (last_middle_down_time.msecsTo(QTime::currentTime()) > 200) {
                 }
                 else {
-                    smart_jump_under_pos({ mevent->pos().x(), mevent->pos().y() });
+                    if (MIDDLE_CLICK_COMMAND.size() > 0) {
+                        execute_macro_if_enabled(MIDDLE_CLICK_COMMAND);
+                    }
+                    else{
+                        smart_jump_under_pos({ mevent->pos().x(), mevent->pos().y() });
+                    }
                 }
             }
         }
@@ -3080,10 +3085,6 @@ void MainWidget::mousePressEvent(QMouseEvent* mevent) {
     }
 
     if (mevent->button() == Qt::MouseButton::MiddleButton) {
-        if (MIDDLE_CLICK_COMMAND.size() > 0) {
-            execute_macro_if_enabled(MIDDLE_CLICK_COMMAND);
-            return;
-        }
         last_middle_down_time = QTime::currentTime();
         middle_click_hold_command_already_executed = false;
         last_mouse_down_window_pos = WindowPos{ mevent->pos().x(), mevent->pos().y() };
