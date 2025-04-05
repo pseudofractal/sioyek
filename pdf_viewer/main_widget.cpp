@@ -209,6 +209,7 @@ extern bool USE_CUSTOM_COLOR_FOR_DARK_SYSTEM_THEME;
 extern bool ALLOW_MAIN_VIEW_SCROLL_WHILE_IN_OVERVIEW;
 extern bool SAME_WIDTH;
 
+extern bool SIMPLIFY_FREEHAND_DRAWINGS;
 extern bool SHOW_RIGHT_CLICK_CONTEXT_MENU;
 extern std::wstring CONTEXT_MENU_ITEMS;
 extern std::wstring CONTEXT_MENU_ITEMS_FOR_SELECTED_TEXT;
@@ -7961,7 +7962,15 @@ void MainWidget::finish_drawing(QPoint pos) {
         handle_drawing_move(pos, -1.0f);
     }
 
-    std::vector<FreehandDrawingPoint> pruned_points = prune_freehand_drawing_points(opengl_widget->current_drawing.points);
+
+    std::vector<FreehandDrawingPoint> pruned_points;
+    if (SIMPLIFY_FREEHAND_DRAWINGS) {
+        pruned_points = prune_freehand_drawing_points(opengl_widget->current_drawing.points);
+    }
+    else {
+        pruned_points = opengl_widget->current_drawing.points;
+    }
+
     opengl_widget->current_drawing.points.clear();
 
     FreehandDrawing pruned_drawing;
