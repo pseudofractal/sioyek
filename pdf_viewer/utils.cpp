@@ -2010,7 +2010,13 @@ std::wstring get_canonical_path(const std::wstring& path) {
         return L"";
     }
 #else
-    QDir dir(QString::fromStdWString(path));
+    std::wstring expanded_path = path;
+
+    if (path.size() > 0 && path[0] == '~'){
+        expanded_path = QDir::homePath().toStdWString() + path.substr(1, path.size()-1);
+    }
+
+    QDir dir(QString::fromStdWString(expanded_path));
     //return std::move(dir.canonicalPath().toStdWString());
     return std::move(dir.absolutePath().toStdWString());
 #endif
