@@ -29,6 +29,7 @@ bool ALWAYS_COPY_SELECTED_TEXT = false;
 bool SHOW_STATUSBAR_ONLY_WHEN_MOUSE_OVER = false;
 float PERSISTANCE_PERIOD = -1.0f;
 bool SCROLL_PAST_DOCUMENT_ENDS = true;
+bool SIMPLIFY_FREEHAND_DRAWINGS = true;
 
 #ifdef SIOYEK_MOBILE
 bool TOUCH_MODE = true;
@@ -1022,6 +1023,7 @@ ConfigManager::ConfigManager(const Path& default_path, const Path& auto_path, co
     add_bool(L"show_statusbar_only_when_hovered", &SHOW_STATUSBAR_ONLY_WHEN_MOUSE_OVER);
     add_bool(L"scroll_past_document_ends", &SCROLL_PAST_DOCUMENT_ENDS);
     add_bool(L"uniform_page_widths", &SAME_WIDTH);
+    add_bool(L"simplify_freehand_drawings", &SIMPLIFY_FREEHAND_DRAWINGS);
 
     add_string(L"google_scholar_address", &GOOGLE_SCHOLAR_ADDRESS);
     add_string(L"item_list_prefix", &ITEM_LIST_PREFIX);
