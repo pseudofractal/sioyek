@@ -620,6 +620,8 @@ public:
     void portal_to_definition();
     void move_visual_mark_command(int amount);
     void handle_goto_loaded_document();
+    int get_current_tab_index();
+    int goto_ith_next_tab(int i);
 
     void handle_vertical_move(int amount);
     void handle_horizontal_move(int amount);

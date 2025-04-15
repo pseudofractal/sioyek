@@ -8225,6 +8225,35 @@ void MainWidget::handle_move_text_mark_up() {
     }
 }
 
+int MainWidget::get_current_tab_index(){
+    std::wstring current_document_path = L"";
+
+    if (doc()) {
+        current_document_path = doc()->get_path();
+    }
+
+    std::vector<std::wstring> loaded_document_paths_ = document_manager->get_tabs();
+    auto loc = std::find(loaded_document_paths_.begin(), loaded_document_paths_.end(), current_document_path);
+    int index = -1;
+    if (loc != loaded_document_paths_.end()) {
+        index = loc - loaded_document_paths_.begin();
+    }
+    return index;
+}
+
+int MainWidget::goto_ith_next_tab(int i){
+    int current_tab_index = get_current_tab_index();
+    std::vector<std::wstring> loaded_document_paths = document_manager->get_tabs();
+    if (loaded_document_paths.size() > 1){
+        int new_index = current_tab_index + i;
+        while (new_index < 0 ){
+            new_index += loaded_document_paths.size();
+        }
+        new_index = new_index % loaded_document_paths.size();
+        handle_goto_tab(loaded_document_paths[new_index]);
+    }
+}
+
 void MainWidget::handle_goto_loaded_document() {
     // opens a list of currently loaded documents. This is basically sioyek's "tab" feature
     // the user can "unload" a document by pressing the delete key while it is highlighted in the list
@@ -8242,18 +8271,7 @@ void MainWidget::handle_goto_loaded_document() {
         }
     }
 
-    std::wstring current_document_path = L"";
-
-    if (doc()) {
-        current_document_path = doc()->get_path();
-    }
-
-
-    auto loc = std::find(loaded_document_paths_.begin(), loaded_document_paths_.end(), current_document_path);
-    int index = -1;
-    if (loc != loaded_document_paths_.end()) {
-        index = loc - loaded_document_paths_.begin();
-    }
+    int index = get_current_tab_index();
 
     set_filtered_select_menu<std::wstring>(this, true,
         MULTILINE_MENUS,

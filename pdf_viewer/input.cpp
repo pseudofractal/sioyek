@@ -1189,6 +1189,38 @@ public:
 
 };
 
+class GotoNextTabCommand : public Command {
+public:
+    static inline const std::string cname = "goto_next_tab";
+    static inline const std::string hname = "Go to the next tab.";
+    GotoNextTabCommand(MainWidget* w) : Command(cname, w) {}
+
+    void perform() {
+        widget->goto_ith_next_tab(1);
+    }
+
+    std::string get_name() {
+        return cname;
+    }
+
+};
+
+class GotoPrevTabCommand : public Command {
+public:
+    static inline const std::string cname = "goto_prev_tab";
+    static inline const std::string hname = "Go to the previous tab.";
+    GotoPrevTabCommand(MainWidget* w) : Command(cname, w) {}
+
+    void perform() {
+        widget->goto_ith_next_tab(-1);
+    }
+
+    std::string get_name() {
+        return cname;
+    }
+
+};
+
 class NextItemCommand : public Command {
 public:
     static inline const std::string cname = "next_item";
@@ -6658,6 +6690,8 @@ CommandManager::CommandManager(ConfigManager* config_manager) {
     register_command<OverviewDefinitionCommand>();
     register_command<PortalToDefinitionCommand>();
     register_command<GotoLoadedDocumentCommand>();
+    register_command<GotoNextTabCommand>();
+    register_command<GotoPrevTabCommand>();
     register_command<NextItemCommand>();
     register_command<PrevItemCommand>();
     register_command<ToggleTextMarkCommand>();
