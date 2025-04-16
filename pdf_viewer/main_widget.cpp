@@ -8241,7 +8241,7 @@ int MainWidget::get_current_tab_index(){
     return index;
 }
 
-int MainWidget::goto_ith_next_tab(int i){
+void MainWidget::goto_ith_next_tab(int i){
     int current_tab_index = get_current_tab_index();
     std::vector<std::wstring> loaded_document_paths = document_manager->get_tabs();
     if (loaded_document_paths.size() > 1){
