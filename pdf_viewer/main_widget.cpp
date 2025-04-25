@@ -1617,6 +1617,7 @@ void MainWidget::handle_escape() {
 
 
     clear_selected_rect();
+    set_rect_select_mode(false);
 
     validate_render();
     setFocus();
