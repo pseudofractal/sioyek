@@ -856,6 +856,10 @@ std::optional<std::wstring> Command::get_text_suggestion(int index) {
     return {};
 }
 
+std::optional<QString> Command::get_file_path_requirement_root_dir(){
+    return {};
+}
+
 void Command::perform_up() {
 }
 
@@ -5943,6 +5947,14 @@ public:
 
     virtual void set_file_requirement(std::wstring value) {
         file_path = value;
+    }
+
+    std::optional<QString> get_file_path_requirement_root_dir() {
+        QFileInfo file_info(QString::fromStdWString(widget->doc()->get_path()));
+        QString full_path = file_info.absolutePath();
+        QString file_path = file_info.fileName();
+        QString parent_path = full_path.mid(full_path.size() - file_path.size());
+        return parent_path;
     }
 
     std::optional<Requirement> next_requirement(MainWidget* widget) {

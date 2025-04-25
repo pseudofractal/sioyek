@@ -73,6 +73,7 @@ public:
     virtual bool is_holdable();
     virtual void on_key_hold();
     virtual void on_text_change(const QString& new_text);
+    virtual std::optional<QString> get_file_path_requirement_root_dir();
 
     void set_next_requirement_with_string(std::wstring str);
 

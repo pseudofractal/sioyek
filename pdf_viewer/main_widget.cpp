@@ -5476,11 +5476,12 @@ void MainWidget::advance_command(std::unique_ptr<Command> new_command, std::wstr
             }
             else if (next_requirement.type == RequirementType::File || next_requirement.type == RequirementType::Folder) {
                 std::wstring file_name;
+                std::optional<QString> root_dir = pending_command_instance->get_file_path_requirement_root_dir();
                 if (next_requirement.type == RequirementType::File) {
-                    file_name = select_command_file_name(pending_command_instance->get_name());
+                    file_name = select_command_file_name(pending_command_instance->get_name(), root_dir);
                 }
                 else{
-                    file_name = select_command_folder_name();
+                    file_name = select_command_folder_name(root_dir);
                 }
 #ifdef SIOYEK_ANDROID
 
