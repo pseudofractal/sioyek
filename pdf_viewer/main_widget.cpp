@@ -123,6 +123,7 @@ extern bool FUZZY_SEARCHING;
 extern bool AUTO_RENAME_DOWNLOADED_PAPERS;
 extern bool SHOW_STATUSBAR_ONLY_WHEN_MOUSE_OVER;
 
+extern float TEXT_SELECTION_MINIMUM_DISTANCE;
 extern float VISUAL_MARK_NEXT_PAGE_FRACTION;
 extern float VISUAL_MARK_NEXT_PAGE_THRESHOLD;
 extern float SMALL_PIXMAP_SCALE;
@@ -2518,7 +2519,7 @@ void MainWidget::handle_left_click(WindowPos click_pos, bool down, bool is_shift
         //    return;
         //}
 
-        if ((!was_overview_mode) && (!TOUCH_MODE) && (!mouse_drag_mode) && (manhattan_distance(fvec2(last_mouse_down), fvec2(abs_doc_pos)) > 5)) {
+        if ((!was_overview_mode) && (!TOUCH_MODE) && (!mouse_drag_mode) && (manhattan_distance(fvec2(last_mouse_down), fvec2(abs_doc_pos)) > TEXT_SELECTION_MINIMUM_DISTANCE)) {
 
             //fz_point selection_begin = { last_mouse_down_x, last_mouse_down_y };
             //fz_point selection_end = { x_, y_ };

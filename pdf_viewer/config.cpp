@@ -28,6 +28,7 @@ bool ADD_NEWLINES_WHEN_COPYING_TEXT = false;
 bool ALWAYS_COPY_SELECTED_TEXT = false;
 bool SHOW_STATUSBAR_ONLY_WHEN_MOUSE_OVER = false;
 float PERSISTANCE_PERIOD = -1.0f;
+float TEXT_SELECTION_MINIMUM_DISTANCE = 5;
 bool SCROLL_PAST_DOCUMENT_ENDS = true;
 bool SIMPLIFY_FREEHAND_DRAWINGS = true;
 
@@ -940,6 +941,7 @@ ConfigManager::ConfigManager(const Path& default_path, const Path& auto_path, co
     add_float(L"epub_height", &EPUB_HEIGHT, FloatExtras{0.0f, 1000.0f});
     add_float(L"epub_font_size", &EPUB_FONT_SIZE, FloatExtras{0.0f, 100.0f});
     add_float(L"persistance_period", &PERSISTANCE_PERIOD, FloatExtras{-1.0f, 100000.0f});
+    add_float(L"text_selection_minimum_distance", &TEXT_SELECTION_MINIMUM_DISTANCE, FloatExtras{-0.0f, 100.0f});
     add_bool(L"default_dark_mode", &DEFAULT_DARK_MODE);
     add_bool(L"use_system_theme", &USE_SYSTEM_THEME);
     add_bool(L"use_custom_color_as_dark_system_theme", &USE_CUSTOM_COLOR_FOR_DARK_SYSTEM_THEME);
