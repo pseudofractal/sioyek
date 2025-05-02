@@ -690,7 +690,38 @@ public:
 
     }
 
-    void perform() {
+    bool is_holdable() override {
+        if (!is_modal) {
+            return false;
+        }
+        else {
+            int mode_index = get_current_mode_index();
+            if (mode_index >= 0) {
+                return commands[mode_index]->is_holdable();
+            }
+            return false;
+        }
+    }
+
+    void perform_up() override {
+        if (is_holdable()) {
+            int mode_index = get_current_mode_index();
+            if (mode_index >= 0) {
+                commands[mode_index]->perform_up();
+            }
+        }
+    }
+
+    void on_key_hold() override {
+        if (is_holdable()) {
+            int mode_index = get_current_mode_index();
+            if (mode_index >= 0) {
+                commands[mode_index]->on_key_hold();
+            }
+        }
+    }
+
+    void perform() override {
         if (!is_modal) {
             for (int i = 0; i < commands.size(); i++) {
 
@@ -708,7 +739,8 @@ public:
 
             for (int i = 0; i < commands.size(); i++) {
                 if (mode_matches(mode_string, modes[i])) {
-                    widget->handle_command_types(std::move(commands[i]), 1);
+                    perform_subcommand(i);
+                    // widget->handle_command_types(std::move(commands[i]), 1);
                     //commands[i]->run(widget);
                     return;
                 }
