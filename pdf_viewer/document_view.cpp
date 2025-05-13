@@ -25,6 +25,7 @@ extern float HIDE_SYNCTEX_HIGHLIGHT_TIMEOUT;
 extern int PAGE_PADDINGS;
 extern bool SAME_WIDTH;
 extern bool SCROLL_PAST_DOCUMENT_ENDS;
+extern bool RECTO_VERSO_ADJUSTMENT;
 
 DocumentView::DocumentView(DatabaseManager* db_manager,
     DocumentManager* document_manager,
@@ -2079,7 +2080,7 @@ void DocumentView::fill_cached_virtual_rects(bool force) {
                 page_rect.y1 = cum_offset + page_height;
 
                 float mult = 1.0f;
-                if (i % 2 == 1) {
+                if ((i + (int)RECTO_VERSO_ADJUSTMENT) % 2 == 1) {
                     cum_offset += page_height + page_space_y;
                 }
                 else {

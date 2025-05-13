@@ -7655,6 +7655,9 @@ void MainWidget::on_configs_changed(std::vector<std::string>* config_names) {
         if (confname == "gamma") {
             should_invalidate_render = true;
         }
+        if (confname == "recto_verso_adjustment") {
+            dv()->fill_cached_virtual_rects(true);
+        }
         if (confname == "highlight_links") {
             opengl_widget->set_highlight_links(SHOULD_HIGHLIGHT_LINKS, false);
         }
