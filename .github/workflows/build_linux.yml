@@ -1,0 +1,58 @@
+name: Linux Build
+
+on:
+  push:
+    branches:
+      - "*"
+  pull_request:
+    branches:
+      - "*"
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Cache APT packages
+        uses: actions/cache@v4
+        with:
+          path: /var/cache/apt/archives
+          key: apt-cache-${{ runner.os }}-${{ hashFiles('**/build_and_release.sh') }}
+          restore-keys: |
+            apt-cache-${{ runner.os }}-
+
+      - name: Set up GCC 9
+        uses: egor-tensin/setup-gcc@v1
+        with:
+          version: 9
+          platform: x64
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y libharfbuzz-dev
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: '5.15.2'
+
+      - name: Build
+        run: |
+          chmod +x ./build_and_release.sh
+          MAKE_PARALLEL=$(nproc) ./build_and_release.sh
+        env:
+          CC: gcc-9
+          CXX: g++-9
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sioyek-linux-build
+          path: sioyek-release-linux.zip
+
