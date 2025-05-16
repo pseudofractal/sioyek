@@ -1581,8 +1581,8 @@ QCommandLineParser* get_command_line_parser() {
 	version_option.setDescription("Print sioyek version.");
 	parser->addOption(version_option);
 
-	QCommandLineOption name_option("name");
-	name_option.setDescription("Change the name of the opened Sioyek application");
+	QCommandLineOption name_option("app-name");
+	name_option.setDescription("Change the name of the opened Sioyek application (Overrides the QTApplication name)");
 	parser->addOption(name_option);
 
 	QCommandLineOption page_option("page", "Which page to open.", "page");

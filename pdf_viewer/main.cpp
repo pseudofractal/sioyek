@@ -738,7 +738,7 @@ int main(int argc, char* args[]) {
 		APPLICATION_NAME = *cmdAppName;
 	}
 
-	RunGuard guard(utf8_encode(APPLICATION_NAME));
+	RunGuard guard(QString::fromStdString(utf8_encode(APPLICATION_NAME)));
 
 	if (!guard.isPrimary()) {
 		QStringList sent_args = convert_arguments(app.arguments());
