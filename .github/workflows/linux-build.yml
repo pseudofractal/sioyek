@@ -31,15 +31,8 @@ jobs:
         version: '5.15.2'
         host: 'linux'
         target: 'desktop'
-
-    - name: Apply MuPDF patch & config tweaks
-      run: |
-        patch --forward --strip=1 < mupdf-1.23.0.patch
-        sed -i 's/-lmupdf-threads/-lfreetype -lgumbo -ljbig2dec -lopenjp2 -ljpeg/' pdf_viewer_build_config.pro
-        sed -i 's/-lmupdf-third//'                                     pdf_viewer_build_config.pro
-        sed -i '/#define LINUX_STANDARD_PATHS/s/^\/\/\s*//' pdf_viewer/main.cpp
-
     - name: Compile
+
       env:
         MAKE_PARALLEL: ${{ vars.MAKE_PARALLEL || '$(nproc)' }}
       run: |
