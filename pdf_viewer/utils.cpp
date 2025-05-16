@@ -1541,6 +1541,15 @@ bool should_new_instance(int argc, char** argv) {
 	return false;
 }
 
+std::optional<std::wstring> get_app_name(int argc, char **argv) {
+	for (int i = 0; i < argc; ++i) {
+		if (std::strcmp(argv[i], "--app-name") == 0 && i + 1 < argc) {
+			return utf8_decode(std::string(argv[i + 1]));
+		}
+	}
+	return std::nullopt;
+}
+
 QCommandLineParser* get_command_line_parser() {
 
 	QCommandLineParser* parser = new QCommandLineParser();
@@ -1572,6 +1581,9 @@ QCommandLineParser* get_command_line_parser() {
 	version_option.setDescription("Print sioyek version.");
 	parser->addOption(version_option);
 
+	QCommandLineOption name_option("name");
+	name_option.setDescription("Change the name of the opened Sioyek application");
+	parser->addOption(name_option);
 
 	QCommandLineOption page_option("page", "Which page to open.", "page");
 	parser->addOption(page_option);

@@ -733,7 +733,12 @@ int main(int argc, char* args[]) {
 		use_single_instance = false;
 	}
 
-	RunGuard guard("sioyek");
+	auto cmdAppName = get_app_name(argc, args);
+	if (cmdAppName) {
+		APPLICATION_NAME = *cmdAppName;
+	}
+
+	RunGuard guard(utf8_encode(APPLICATION_NAME));
 
 	if (!guard.isPrimary()) {
 		QStringList sent_args = convert_arguments(app.arguments());

@@ -125,6 +125,7 @@ QStringList deserialize_string_array(const QByteArray& byte_array);
 //Path add_redundant_dot_to_path(const Path& sane_path);
 bool should_reuse_instance(int argc, char** argv);
 bool should_new_instance(int argc, char** argv);
+std::optional<std::wstring> get_app_name(int argc, char **argv);
 QCommandLineParser* get_command_line_parser();
 std::wstring concatenate_path(const std::wstring& prefix, const std::wstring& suffix);
 std::wstring get_canonical_path(const std::wstring& path);
